@@ -53,7 +53,7 @@ def home_page():
             n_users = st.slider("⦿ Enter Number of Bidders",1,20, value=5)
             st.markdown(' ')
         with col2:
-            total_capacity = st.number_input("⦿ Enter Total Capacity (MW)", value=10000)
+            total_capacity = st.number_input("⦿ Enter Total Capacity (KW)", value=10000)
             st.markdown(' ')
         df = get_dataframe(n_users)
 
