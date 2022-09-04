@@ -48,6 +48,6 @@ def layout(*args):
 
 def footer(success=True):
     myargs = [
-        "Made by K Vikas Mahendar",
+        "Developed by O Karamallayan",
     ]
     layout(*myargs)
