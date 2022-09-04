@@ -30,12 +30,13 @@ def run_model(data_df, total_capacity):
     weights = np.asarray([i / total_contrib for i in contrib]).astype(float)
     allocations = np.asarray(weights * total_capacity).astype(float)
     data_df['Score'] = np.round(weights, decimals=3)
-    data_df['Capacity Alloted'] = np.round(allocations, decimals=0)
+    data_df['Capacity Alloted (kW)'] = np.round(allocations, decimals=0)
     least_quoted_price = quotes[0]
     business_capacity = np.round(np.asarray([least_quoted_price * i for i in allocations]).astype(float), decimals=0)
-    data_df['Contract Value'] = business_capacity
-    data_df = data_df.append({'Bidder' : None, 'Quoted Price' : None, 'Score' : None, 'Capacity Alloted': None, 'Contract Value': None},ignore_index = True)
-    data_df = data_df.append({'Bidder' : "Total Allocated", 'Quoted Price' : None, 'Score' : None, 'Capacity Alloted':data_df['Capacity Alloted'].sum(), 'Contract Value':data_df['Contract Value'].sum()},ignore_index = True)
+    business_capacity_str = [locale.currency(i, grouping=True) for i in business_capacity]
+    data_df['Contract Value'] = business_capacity_str
+    data_df = data_df.append({'Bidder' : None, 'Quoted Price' : None, 'Score' : None, 'Capacity Alloted (kW)': None, 'Contract Value': None},ignore_index = True)
+    data_df = data_df.append({'Bidder' : "Total Allocated", 'Quoted Price' : None, 'Score' : None, 'Capacity Alloted (kW)':data_df['Capacity Alloted (kW)'].sum(), 'Contract Value':locale.currency(business_capacity.sum(), grouping=True)},ignore_index = True)
     return data_df
 
 def home_page():
