@@ -37,7 +37,7 @@ def home_page():
             with col2:
                 st.image(im_sidebar)
 
-            col1, col2, col3, col4, col5 = st.columns([0.25, 1, 0.5, 1, 0.25])
+            col1, col2, col3, col4, col5 = st.columns([0.35, 1, 0.25, 1, 0.25])
             with col2:
                 form_button = st.button('NEW')
             with col4:
