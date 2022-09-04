@@ -2,10 +2,8 @@ import streamlit as st
 from PIL import Image
 import pandas as pd
 import numpy as np
-import locale
+from babel.numbers import format_currency
 from st_aggrid import GridOptionsBuilder, AgGrid, GridUpdateMode, DataReturnMode
-
-locale.setlocale(locale.LC_MONETARY, 'en_IN')
 
 @st.cache(allow_output_mutation=True)
 def get_dataframe(n_users):
@@ -36,10 +34,10 @@ def run_model(data_df, total_capacity):
     data_df['Capacity Alloted (kW)'] = np.round(allocations, decimals=0)
     least_quoted_price = quotes[0]
     business_capacity = np.round(np.asarray([least_quoted_price * i for i in allocations]).astype(float), decimals=0)
-    business_capacity_str = [locale.currency(i, grouping=True) for i in business_capacity]
+    business_capacity_str = [format_currency(i, 'INR', locale='en_IN') for i in business_capacity]
     data_df['Contract Value'] = business_capacity_str
     data_df = data_df.append({'Bidder' : None, 'Quoted Price' : None, 'Score' : None, 'Capacity Alloted (kW)': None, 'Contract Value': None},ignore_index = True)
-    data_df = data_df.append({'Bidder' : "Total Allocated", 'Quoted Price' : None, 'Score' : None, 'Capacity Alloted (kW)':data_df['Capacity Alloted (kW)'].sum(), 'Contract Value':locale.currency(business_capacity.sum(), grouping=True)},ignore_index = True)
+    data_df = data_df.append({'Bidder' : "Total Allocated", 'Quoted Price' : None, 'Score' : None, 'Capacity Alloted (kW)':data_df['Capacity Alloted (kW)'].sum(), 'Contract Value':format_currency(business_capacity.sum(), 'INR', locale='en_IN')},ignore_index = True)
     return data_df
 
 def home_page():
