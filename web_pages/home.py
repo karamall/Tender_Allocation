@@ -17,18 +17,25 @@ def convert_df(df):
     return df.to_csv(index=False).encode('utf-8')
 
 def run_model(data_df, total_capacity):
-    quotes = data_df['Quote'].values.tolist()
+    n_users = len(data_df)
+    ranks = [i+1 for i in range(n_users)]
+    data_df['Rank'] = ranks
+    print("Ranks : " , ranks)
+    quotes = data_df['Quoted Price'].values.tolist()
     print("Quotes : " , quotes)
-    total_quote = sum(quotes)
-    contrib = [total_quote - i for i in quotes]
+    total_rank = sum(ranks)
+    contrib = [total_rank - i for i in ranks]
     print("Contrib : " , contrib)
     total_contrib = sum(contrib)
     weights = np.asarray([i / total_contrib for i in contrib]).astype(float)
     allocations = np.asarray(weights * total_capacity).astype(float)
-    data_df['Weights'] = np.round(weights, decimals=3)
-    data_df['Allocation'] = np.round(allocations, decimals=0)
-    data_df = data_df.append({'Bidder' : None, 'Quote' : None, 'Weights' : None, 'Allocation':None},ignore_index = True)
-    data_df = data_df.append({'Bidder' : "Total Allocated", 'Quote' : None, 'Weights' : None, 'Allocation':data_df['Allocation'].sum()},ignore_index = True)
+    data_df['Score'] = np.round(weights, decimals=3)
+    data_df['Capacity Alloted'] = np.round(allocations, decimals=0)
+    least_quoted_price = quotes[0]
+    business_capacity = np.round(np.asarray([least_quoted_price * i for i in allocations]).astype(float), decimals=0)
+    data_df['Contract Value'] = business_capacity
+    data_df = data_df.append({'Bidder' : None, 'Quoted Price' : None, 'Score' : None, 'Capacity Alloted': None, 'Contract Value': None},ignore_index = True)
+    data_df = data_df.append({'Bidder' : "Total Allocated", 'Quoted Price' : None, 'Score' : None, 'Capacity Alloted':data_df['Capacity Alloted'].sum(), 'Contract Value':data_df['Contract Value'].sum()},ignore_index = True)
     return data_df
 
 def home_page():
