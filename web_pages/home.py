@@ -17,12 +17,13 @@ def convert_df(df):
     return df.to_csv(index=False).encode('utf-8')
 
 def run_model(data_df, total_capacity):
-    quotes = data_df['Quote'].values[::-1]
-    total_quote = quotes.sum()
+    quotes = data_df['Quote'].values.tolist()
+    print("Quotes : " , quotes)
+    total_quote = sum(quotes)
     contrib = [total_quote - i for i in quotes]
+    print("Contrib : " , contrib)
     total_contrib = sum(contrib)
-    weights = np.asarray([i/total_contrib for i in contrib]).astype(float)
-    print("Weights List : " , weights)
+    weights = np.asarray([i / total_contrib for i in contrib]).astype(float)
     allocations = np.asarray(weights * total_capacity).astype(float)
     data_df['Weights'] = np.round(weights, decimals=3)
     data_df['Allocation'] = np.round(allocations, decimals=0)
