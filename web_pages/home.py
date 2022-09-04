@@ -39,9 +39,9 @@ def home_page():
 
             col1, col2, col3, col4, col5 = st.columns([0.35, 1, 0.25, 1, 0.25])
             with col2:
-                form_button = st.button('NEW')
+                form_button = st.button('New Form')
             with col4:
-                calculate_button = st.button('ALLOCATE')
+                calculate_button = st.button('Allocate')
 
             st.markdown('---')
 
