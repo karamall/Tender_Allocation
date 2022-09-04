@@ -38,9 +38,9 @@ def home_page():
                 st.image(im_sidebar)
 
             col1, col2 = st.columns(2)
-            with col2:
+            with col1:
                 form_button = st.button('NEW')
-            with col4:
+            with col2:
                 calculate_button = st.button('ALLOCATE')
 
             st.markdown('---')
