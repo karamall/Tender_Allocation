@@ -33,7 +33,7 @@ def home_page():
     with sidebar_placeholder.container():
         with st.sidebar:
             st.markdown("<h1 style='text-align: center; color: #f76497;'>Tender Capacity Allocation</h1>", unsafe_allow_html=True)
-            col1, col2, col3 = st.columns([0.35, 2.5, 0.05])
+            col1, col2, col3 = st.columns([0.35, 2.5, 0.25])
             with col2:
                 st.image(im_sidebar)
 
