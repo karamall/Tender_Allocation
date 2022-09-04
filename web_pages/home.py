@@ -6,9 +6,9 @@ from st_aggrid import GridOptionsBuilder, AgGrid, GridUpdateMode, DataReturnMode
 
 @st.cache(allow_output_mutation=True)
 def get_dataframe(n_users):
-    df = pd.DataFrame(columns=['Bidder', 'Quote'])
+    df = pd.DataFrame(columns=['Bidder', 'Quoted Price'])
     df['Bidder'] = [f'Bidder #{i+1}' for i in range(int(n_users))]
-    df['Quote'] = [0 for i in range(int(n_users))]
+    df['Quoted Price'] = [0 for i in range(int(n_users))]
     return df
 
 @st.cache
@@ -82,7 +82,7 @@ def home_page():
                 theme="blue",
             )
 
-            data_df = grid_table.data.sort_values('Quote')
+            data_df = grid_table.data.sort_values('Quoted Price')
 
     if calculate_button:
         sidebar_placeholder.empty()
