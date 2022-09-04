@@ -28,7 +28,7 @@ def run_model(data_df, total_capacity):
     return data_df
 
 def home_page():
-    im_sidebar = Image.open('./assets/images/logo_big.png')
+    im_sidebar = Image.open('./assets/images/TEDA-Logo.jpg')
     sidebar_placeholder = st.sidebar.empty()
     with sidebar_placeholder.container():
         with st.sidebar:
@@ -37,7 +37,7 @@ def home_page():
             with col2:
                 st.image(im_sidebar)
 
-            col1, col2, col3, col4, col5 = st.columns([0.25, 1, 0.25, 1, 0.25])
+            col1, col2, col3, col4, col5 = st.columns([0.5, 1, 0.5, 1, 0.5])
             with col2:
                 form_button = st.button('NEW FORM')
             with col4:
