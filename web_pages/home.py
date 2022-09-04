@@ -2,7 +2,10 @@ import streamlit as st
 from PIL import Image
 import pandas as pd
 import numpy as np
+import locale
 from st_aggrid import GridOptionsBuilder, AgGrid, GridUpdateMode, DataReturnMode
+
+locale.setlocale(locale.LC_MONETARY, 'en_IN')
 
 @st.cache(allow_output_mutation=True)
 def get_dataframe(n_users):
