@@ -17,12 +17,15 @@ def convert_df(df):
     return df.to_csv(index=False).encode('utf-8')
 
 def run_model(data_df, total_capacity):
-    weights = data_df['Quote'].values[::-1]
+    quotes = data_df['Quote'].values[::-1]
+    total_quote = quotes.sum()
+    contrib = [total_quote - i for i in quotes]
+    total_contrib = sum(contrib)
+    weights = np.asarray([i/total_contrib for i in contrib]).astype(float)
     print("Weights List : " , weights)
-    weights = weights / sum(weights)
-    allocations = weights * total_capacity
-    data_df['Weights'] = np.round(np.asarray(weights).astype(float), decimals=3)
-    data_df['Allocation'] = np.round(np.asarray(weights * total_capacity).astype(float), decimals=0)
+    allocations = np.asarray(weights * total_capacity).astype(float)
+    data_df['Weights'] = np.round(weights, decimals=3)
+    data_df['Allocation'] = np.round(allocations, decimals=0)
     data_df = data_df.append({'Bidder' : None, 'Quote' : None, 'Weights' : None, 'Allocation':None},ignore_index = True)
     data_df = data_df.append({'Bidder' : "Total Allocated", 'Quote' : None, 'Weights' : None, 'Allocation':data_df['Allocation'].sum()},ignore_index = True)
     return data_df
